@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dictsystem.dao.ZiMapper">
+    <insert id="insertPic">
+        insert into author(pic)
+        values (#{pic})
+    </insert>
+
+    <update id="editPic">
+        update zi
+        set zixing = #{zixing} where ID = #{ID}
+    </update>
+
+    <select id="queryZiById" resultType="Zi">
+        select * from zi where ID = #{id}
+    </select>
+
+    <select id="queryZisByYin" resultType="Zi">
+        select * from zi where yin like concat("%",#{yin},"%")
+        limit #{start}, #{num};
+    </select>
+
+    <select id="queryAllZiPre" resultType="ZiPre">
+        select ID, zi, weizhi from zi limit #{start}, #{num};
+    </select>
+
+    <select id="queryZiPreByYin" resultType="ZiPre">
+        select ID, zi, weizhi from zi where yin like concat("%", #{yin},"%") limit #{start}, #{num};
+    </select>
+
+    <select id="queryZiPreByZi" resultType="ZiPre">
+        select ID, zi, weizhi from zi where zi = #{zi};
+    </select>
+
+    <update id="appendXiuDing">
+        update zi
+        <set>
+            <if test="wending!=null and wending.trim()!=''"> wending = #{wending}, </if>
+            <if test="yinding!=null and yinding.trim()!=''"> yinding = #{yinding}, </if>
+            <if test="yiding!=null and yiding.trim()!=''"> yiding = #{yiding}, </if>
+        </set>
+        where ID = #{ID}
+    </update>
+
+    <insert id="appendZi">
+        insert into zi(zi, weizhi, shuowen, yin, yi, zixing)
+        values (#{zi}, #{weizhi}, #{shuowen}, #{yin}, #{yi}, #{zixing});
+    </insert>
+
+</mapper>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="/lib/layui-v2.6.3/css/layui.css" media="all">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+  <style>
+    body {
+      background-color: #ffffff;
+      background-image: url(/images/detail1.jpg);
+    }
+    div {
+      border:3px solid ;
+      word-wrap:break-word;
+      border-color: brown;
+      background-color: #ffffff;
+      overflow: Scroll;
+      overflow-x:hidden;
+      overflow-y:auto;
+    }
+    span{
+      font-weight: 800;
+    }
+  </style>
+
+</head>
+<body>
+
+<div style="background-color:transparent;overflow:hidden; border: 0px;height: 1300px; width: 1450px; position: relative;">
+
+  <div id="yuanzi" style="color:Brown; font-family:楷体; background-color:transparent;width: 400px; height: 200px;position: absolute; left: 5%; top: 5%;font-weight:600;font-size: 120px;border: 0px"></div>
+  <span style="position: absolute; left: 16%; top: 12.5%;">所在位置</span>
+  <div id="location" style=" line-height:30px;width: 550px; height: 50px; position: absolute; left: 21%; top: 12%;"></div>
+
+
+  <span style="position: absolute; left: 5%; top: 19.5%;">说文：</span>
+  <div id="yinyong" style="line-height:30px;width: 600px; height: 100px; position: absolute; left: 8%; top: 19%;"></div>
+  <button onclick="button1()" class="layui-btn layui-btn-normal layui-btn-xs " style="background-color:Brown;width:50px;height:30px;position: absolute; left: 52%; top: 19.5%;">修订</button>
+  <div id="yinyongedit" class="edit" style="line-height:30px;border-color: grey;width:400px; height: 100px; position: absolute; left: 56.5%; top: 19%;"></div>
+
+
+  <span style="position: absolute; left: 5%; top: 29.5%;">字形:</span>
+  <div id="zixing" style="width: 600px; height: 200px; position: absolute; left: 8%; top: 29%;">
+    <img id="imgzixing0" src=""><img id="imgzixing1" src=""><img id="imgzixing2" src=""><img id="imgzixing3" src="">
+    <img id="imgzixing4" src=""><img id="imgzixing5" src=""><img id="imgzixing6" src=""><img id="imgzixing7" src="">
+    <img id="imgzixing8" src=""><img id="imgzixing9" src=""><img id="imgzixing10" src=""><img id="imgzixing11" src="">
+    <img id="imgzixing12" src=""><img id="imgzixing13" src=""><img id="imgzixing14" src=""><img id="imgzixing15" src="">
+  </div>
+
+  <button onclick="button2()" class="layui-btn layui-btn-normal layui-btn-xs " style="background-color:Brown;width:50px;height:30px;position: absolute; left: 52%; top: 29.5%;">修订</button>
+  <div id="zixingedit" class="edit" style="line-height:30px;border-color: grey;width:400px; height: 200px; position: absolute; left: 56.5%; top: 29%;"></div>
+
+  <span style="position: absolute; left: 5%; top: 47.5%;">字音:</span>
+  <div id="ziyin" style="line-height:30px;width: 600px; height: 100px; position: absolute; left: 8%; top: 47%;">
+
+  </div>
+
+  <button onclick="button3()" class="layui-btn layui-btn-normal layui-btn-xs " style="background-color:Brown;width:50px;height:30px;position: absolute; left: 52%; top: 47.5%;">修订</button>
+  <div  id="ziyinedit" class="edit" style="line-height:30px;border-color: grey;width: 400px; height: 100px; position: absolute; left: 56.5%; top: 47%;"></div>
+
+  <span style="position: absolute; left: 5%; top: 58.5%;">字义:</span>
+  <div id="ziyi" style="line-height:30px;width: 600px; height: 500px; position:absolute; left: 8%; top: 58%;"></div>
+
+
+  <button  onclick="button4()" class="layui-btn layui-btn-normal layui-btn-xs " style="background-color:Brown;width:50px;height:30px;position: absolute; left: 52%; top: 58.5%;">修订</button>
+  <div  id="ziyiedit" class="edit" style="line-height:30px;border-color: grey; width: 400px; height: 500px; position: absolute; left: 56.5%; top: 58%;"></div>
+
+</div>
+<input type="hidden" class="id" th:value="${ID}">
+<input type="hidden" class="count" th:value="${n}">
+<input type="hidden" class="type" th:if="${session.ADMIN != null}" th:text="2">
+<script src="/lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+<script src="/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
+<script>
+    var $ = layui.jquery,
+            layer = layui.layer,
+            miniAdmin = layui.miniAdmin,
+            miniTongji = layui.miniTongji;
+    var uri = $('.id').val(), n = $('.count').val(), status = $('.type').val() != null ? 2 : 1;
+    console.log(status);
+    layui.use(['jquery', 'layer', 'miniAdmin','miniTongji'], function () {
+      console.log(uri);
+      var url = '/getPicsUrl?ID=' + uri;
+      $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'json',
+        timeout: 1000,
+        cache: false,
+        error: erryFunction,  //错误执行方法
+        success: succFunction //成功执行方法
+      })
+      function erryFunction() {
+        alert("获取数据失败");
+      }
+      function succFunction(data) {
+        //循环获取数据
+        $("#yuanzi").append(data.zi.zi);
+        $("#location").append(data.zi.weizhi);
+        $("#yinyong").append(data.zi.shuowen);
+        $("#yinyongedit").append(data.zi.wending);
+        let divA = document.getElementById("zixingedit");
+        for (let i = 0; i < data.count; i++) {
+          $("#imgzixing" + i).attr("src", 'images/' + data.zi.id + '/' + data.xings[i].url);
+          divA.innerHTML = divA.innerHTML+'·'+data.xings[i].miaoshu+'<br>';
+        }
+        $("#xingding").attr("src", 'images/d575e1c1-ecae-4a4b-aaf0-5c4d2bcaf975.jpg');
+        $("#ziyin").append(data.zi.yin);
+        $("#ziyinedit").append(data.zi.yinding);
+        $("#ziyi").append(data.zi.yi);
+        $("#ziyiedit").append(data.zi.yiding);
+      }
+      var button = document.getElementsByTagName("button");
+    });
+
+    function button1(){
+      console.log(status);
+      if(status == 2){
+        window.location.href = "/admin/editShuowenPage?ID=" + uri;
+      } else {
+        layer.msg("您不是管理员，无法修订！", {icon:2,time:2000, shift: 6});
+      }
+    }
+    function button2(){
+      if(status == 2){
+        window.location.href = "/admin/editZiXingPage?ID=" + uri;
+      }else{
+        layer.msg("您不是管理员，无法修订！", {icon:2,time:2000, shift: 6});
+      }
+    }
+    function button3(){
+      if(status == 2){
+        window.location.href = "/admin/editZiYinPage?ID=" + uri;
+      }else{
+        layer.msg("您不是管理员，无法修订！", {icon:2,time:2000, shift: 6});
+      }
+    }
+    function button4(){
+      if(status == 2){
+        window.location.href = "/admin/editZiYiPage?ID=" + uri;
+      }else{
+        layer.msg("您不是管理员，无法修订！", {icon:2,time:2000, shift: 6});
+      }
+    }
+</script>
+</body>
+</html>

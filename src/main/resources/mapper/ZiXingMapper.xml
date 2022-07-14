@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dictsystem.dao.ZiXingMapper">
+    <insert id="insertZiXing">
+        insert into zixing(ID, miaoshu, zixing)
+        values (#{ID}, #{miaoshu}, #{zixing})
+    </insert>
+
+    <select id="queryZiXingById" resultType="ZiXing">
+        select * from zixing where ID = #{ID}
+    </select>
+
+    <select id="queryZiXingNum" resultType="int">
+        select count(*) from zixing where ID = #{ID}
+    </select>
+</mapper>

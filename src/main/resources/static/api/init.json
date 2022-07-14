@@ -1,0 +1,46 @@
+{
+  "login": {
+    "title": "登录",
+    "href": "page/login-3.html",
+    "icon": "fa fa-tags",
+    "target": "_blank"
+  },
+  "homeInfo": {
+    "title": "首页",
+    "href": "/userInfo"
+  },
+  "logoInfo": {
+    "title": "汉语大字典",
+    "image": "images/logo.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "《漢語大字典》",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        
+        {
+          "title": "查询汉字",
+          "href": "/searchPage",
+          "icon": "fa fa-window-maximize",
+          "target": "_self"
+        },
+        {
+          "title": "项目介绍",
+          "href": "/userInfo",
+          "icon": "fa fa-edit",
+          "target": "_self"
+        },
+        {
+          "title": "以管理员身份登录",
+          "href": "/login",
+          "icon": "fa fa-flag-o",
+          "target": "_blank"
+        }
+      ]
+    }
+  ]
+}
